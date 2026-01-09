@@ -34,21 +34,12 @@ router.get(
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
-const fs = require('fs');
-const path = require('path');
 
-const logToFile = (message) => {
-  const logPath = path.join(__dirname, '..', 'debug_oauth.log');
-  const timestamp = new Date().toISOString();
-  fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
-};
 
 router.get(
   '/google/callback',
   (req, res, next) => {
     console.log('Google OAuth: Callback received');
-    logToFile('Google OAuth: Callback received at route handler');
-    logToFile(`Request Query: ${JSON.stringify(req.query)}`);
     next();
   },
   passport.authenticate('google', {

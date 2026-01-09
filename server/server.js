@@ -43,6 +43,8 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
+      sameSite: 'lax',
+      // domain: 'localhost', // Removed to fix dev environment issues
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
   })

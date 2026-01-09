@@ -1,5 +1,4 @@
-const fs = require('fs');
-const path = require('path');
+
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -9,11 +8,7 @@ const {
   generateRefreshToken,
 } = require('../utils/generateToken');
 
-const logToFile = (message) => {
-  const logPath = path.join(__dirname, '..', 'debug_oauth.log');
-  const timestamp = new Date().toISOString();
-  fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`);
-};
+// ... (existing imports)
 
 // Serialize user for session
 passport.serializeUser((user, done) => {
@@ -55,8 +50,6 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       async (accessToken, refreshToken, profile, done) => {
         try {
           console.log('Google OAuth: Authentication initiated for profile:', profile.id);
-          logToFile(`Google OAuth: Authentication initiated for profile: ${profile.id}`);
-          logToFile(`Google OAuth: Profile emails: ${JSON.stringify(profile.emails)}`);
           console.log('Google OAuth: Profile emails:', profile.emails);
 
           // Validate that Google provided an email address

@@ -29,8 +29,12 @@ export const AuthProvider = ({ children }) => {
   }, []); // No dependencies - function is stable
 
   // Check if user is logged in on mount
+  // Check if user is logged in on mount
   useEffect(() => {
-    checkAuth();
+    checkAuth().catch(() => {
+      // Failed to extract user, assumes not logged in.
+      // Error is already handled in checkAuth (setting user to null)
+    });
   }, [checkAuth]);
 
   const login = async (credentials) => {

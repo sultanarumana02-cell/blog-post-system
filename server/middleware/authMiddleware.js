@@ -7,7 +7,7 @@ const authMiddleware = async (req, res, next) => {
     const accessToken = req.cookies.accessToken;
 
     if (!accessToken) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         message: 'Authentication required. Please log in to access this resource.',
         code: 'AUTH_REQUIRED'
       });
@@ -16,7 +16,7 @@ const authMiddleware = async (req, res, next) => {
     const decoded = verifyAccessToken(accessToken);
 
     if (!decoded) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         message: 'Invalid or expired authentication token. Please log in again.',
         code: 'INVALID_TOKEN'
       });
@@ -40,12 +40,12 @@ const adminMiddleware = (req, res, next) => {
     return res.status(401).json({ message: 'Not authenticated' });
   }
 
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ 
-        message: 'Admin access required. This action is restricted to administrators only.',
-        code: 'ADMIN_REQUIRED'
-      });
-    }
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({
+      message: 'Admin access required. This action is restricted to administrators only.',
+      code: 'ADMIN_REQUIRED'
+    });
+  }
 
   next();
 };
